@@ -37,6 +37,9 @@ function getExternalsType(compilerOptions) {
 function workerGenerator(loaderContext, workerFilename, workerSource, options) {
   let workerConstructor;
   let workerOptions;
+  const publicPath = options.publicPath
+    ? JSON.stringify(options.publicPath)
+    : "__webpack_public_path__";
 
   if (typeof options.worker === "undefined") {
     workerConstructor = "Worker";
@@ -59,9 +62,7 @@ function workerGenerator(loaderContext, workerFilename, workerSource, options) {
     let fallbackWorkerPath;
 
     if (options.inline === "fallback") {
-      fallbackWorkerPath = `__webpack_public_path__ + ${JSON.stringify(
-        workerFilename
-      )}`;
+      fallbackWorkerPath = `${publicPath} + ${JSON.stringify(workerFilename)}`;
     }
 
     return `
@@ -82,7 +83,7 @@ ${
 
   return `${
     esModule ? "export default" : "module.exports ="
-  } function ${fnName}() {\n  return new ${workerConstructor}(__webpack_public_path__ + ${JSON.stringify(
+  } function ${fnName}() {\n  return new ${workerConstructor}(${publicPath} + ${JSON.stringify(
     workerFilename
   )}${workerOptions ? `, ${JSON.stringify(workerOptions)}` : ""});\n}\n`;
 }

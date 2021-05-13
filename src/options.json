@@ -25,14 +25,7 @@
       ]
     },
     "publicPath": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "instanceof": "Function"
-        }
-      ]
+      "type": "string"
     },
     "filename": {
       "anyOf": [

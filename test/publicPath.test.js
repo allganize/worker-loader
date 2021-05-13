@@ -40,21 +40,6 @@ describe('"publicPath" option', () => {
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
 
-  it('should work and respect the "publicPath" option ("function")', async () => {
-    const compiler = getCompiler("./chunks/entry.js", {
-      publicPath: () => `/public-path-static/`,
-    });
-    const stats = await compile(compiler);
-    const result = await getResultFromBrowser(stats);
-
-    expect(getModuleSource("./chunks/worker.js", stats)).toMatchSnapshot(
-      "module"
-    );
-    expect(result).toMatchSnapshot("result");
-    expect(getWarnings(stats)).toMatchSnapshot("warnings");
-    expect(getErrors(stats)).toMatchSnapshot("errors");
-  });
-
   it('should work and respect the "output.publicPath" option default value', async () => {
     const nanoid = customAlphabet("1234567890abcdef", 10);
     const compiler = getCompiler(
@@ -88,31 +73,6 @@ describe('"publicPath" option', () => {
       {
         output: {
           publicPath: "/public-path-static/",
-          path: path.resolve(__dirname, "./outputs", `test_${nanoid()}`),
-          filename: "[name].bundle.js",
-          chunkFilename: "[name].chunk.js",
-        },
-      }
-    );
-    const stats = await compile(compiler);
-    const result = await getResultFromBrowser(stats);
-
-    expect(getModuleSource("./chunks/worker.js", stats)).toMatchSnapshot(
-      "module"
-    );
-    expect(result).toMatchSnapshot("result");
-    expect(getWarnings(stats)).toMatchSnapshot("warnings");
-    expect(getErrors(stats)).toMatchSnapshot("errors");
-  });
-
-  it('should work and respect the "output.publicPath" option value ("function")', async () => {
-    const nanoid = customAlphabet("1234567890abcdef", 10);
-    const compiler = getCompiler(
-      "./chunks/entry.js",
-      {},
-      {
-        output: {
-          publicPath: () => "/public-path-static/",
           path: path.resolve(__dirname, "./outputs", `test_${nanoid()}`),
           filename: "[name].bundle.js",
           chunkFilename: "[name].chunk.js",

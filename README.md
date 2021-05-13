@@ -21,7 +21,7 @@ worker loader module for webpack
 To begin, you'll need to install `worker-loader`:
 
 ```console
-$ npm install worker-loader --save-dev
+$ npm install @allganize/worker-loader --save-dev
 ```
 
 ### Inlined
@@ -69,7 +69,7 @@ And run `webpack` via your preferred method.
 |                 Name                  |            Type             |             Default             | Description                                                                       |
 | :-----------------------------------: | :-------------------------: | :-----------------------------: | :-------------------------------------------------------------------------------- |
 |        **[`worker`](#worker)**        |     `{String\|Object}`      |            `Worker`             | Allows to set web worker constructor name and options                             |
-|    **[`publicPath`](#publicpath)**    |    `{String\|Function}`     |  based on `output.publicPath`   | specifies the public URL address of the output files when referenced in a browser |
+|    **[`publicPath`](#publicpath)**    |         `{String}`          |  based on `output.publicPath`   | specifies the public URL address of the output files when referenced in a browser |
 |      **[`filename`](#filename)**      |    `{String\|Function}`     |   based on `output.filename`    | The filename of entry chunks for web workers                                      |
 | **[`chunkFilename`](#chunkfilename)** |         `{String}`          | based on `output.chunkFilename` | The filename of non-entry chunks for web workers                                  |
 |        **[`inline`](#inline)**        | `'no-fallback'\|'fallback'` |           `undefined`           | Allow to inline the worker as a `BLOB`                                            |
@@ -154,28 +154,6 @@ module.exports = {
         loader: "worker-loader",
         options: {
           publicPath: "/scripts/workers/",
-        },
-      },
-    ],
-  },
-};
-```
-
-#### `Function`
-
-**webpack.config.js**
-
-```js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.worker\.(c|m)?js$/i,
-        loader: "worker-loader",
-        options: {
-          publicPath: (pathData, assetInfo) => {
-            return `/scripts/${pathData.hash}/workers/`;
-          },
         },
       },
     ],

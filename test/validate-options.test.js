@@ -11,7 +11,7 @@ describe("validate options", () => {
       failure: [true, []],
     },
     publicPath: {
-      success: ["/assets/", () => "/assets/"],
+      success: ["/assets/"],
       failure: [true, []],
     },
     filename: {
